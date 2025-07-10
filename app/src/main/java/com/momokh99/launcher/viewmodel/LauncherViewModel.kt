@@ -60,3 +60,27 @@ private fun filterApps() {
         }
     }
 }
+
+private val _branches = MutableStateFlow<Map<String, Branch>>(emptyMap())
+val branches = _branches.asStateFlow()
+
+fun getBranch(name: String) = flow {
+    emit(_branches.value[name] ?: Branch(
+        name = name,
+        apps = emptyList(),
+        color = MaterialTheme.colorScheme.primary
+    ))
+}
+
+fun addAppToBranch(app: AppInfo, branchName: String) {
+    viewModelScope.launch {
+        val branch = _branches.value[branchName]
+        if (branch != null) {
+            val updatedBranch = branch.copy(
+                apps = branch.apps + app
+            )
+            _branches.value = _branches.value + (branchName to updatedBranch)
+        }
+    }
+}
+
