@@ -1,3 +1,19 @@
+
+package com.momokh99.launcher.ui.screens
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.momokh99.launcher.ui.components.AppGrid
+import com.momokh99.launcher.ui.components.BranchCard
+import com.momokh99.launcher.viewmodel.LauncherViewModel
+
 @Composable
 fun BranchScreen(
     viewModel: LauncherViewModel,
@@ -30,6 +46,8 @@ fun BranchScreen(
                 style = MaterialTheme.typography.headlineMedium
             )
         }
+           Spacer(modifier = Modifier.width(48.dp)) // Balance the back button
+        }
         
         // Branch Card
         BranchCard(
@@ -37,10 +55,25 @@ fun BranchScreen(
             onClick = { /* Branch settings */ }
         )
         
+        Spacer(modifier = Modifier.height(16.dp))
+        
         // Apps in Branch
-        AppGrid(
-            apps = branch.apps,
-            onAppClick = { app -> viewModel.launchApp(app) }
-        )
+        if (branch.apps.isNotEmpty()) {
+            AppGrid(
+                apps = branch.apps,
+                onAppClick = { app -> viewModel.launchApp(app) }
+            )
+        } else {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No apps in this branch yet",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+        
     }
 }
