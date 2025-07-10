@@ -1,22 +1,9 @@
-package com.momokh99.launcher
+package com.momokh99.launcher.data
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import com.momokh99.launcher.ui.theme.LauncherTheme
-import com.momokh99.launcher.viewmodel.LauncherViewModel
-import com.momokh99.launcher.ui.screens.HomeScreen
+import android.graphics.drawable.Drawable
 
-class MainActivity : ComponentActivity() {
-    private val viewModel: LauncherViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            LauncherTheme {
-                HomeScreen(viewModel)
-            }
-        }
-    }
-}
+data class AppInfo(
+    val name: String,
+    val packageName: String,
+    val icon: Drawable?
+)
