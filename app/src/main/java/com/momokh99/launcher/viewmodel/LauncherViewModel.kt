@@ -42,3 +42,21 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
         intent?.let { getApplication<Application>().startActivity(it) }
     }
 }
+private val _searchQuery = MutableStateFlow("")
+val searchQuery = _searchQuery.asStateFlow()
+
+private val _filteredApps = MutableStateFlow<List<AppInfo>>(emptyList())
+val filteredApps = _filteredApps.asStateFlow()
+
+fun updateSearchQuery(query: String) {
+    _searchQuery.value = query
+    filterApps()
+}
+
+private fun filterApps() {
+    viewModelScope.launch {
+        _filteredApps.value = _apps.value.filter { app ->
+            app.name.contains(_searchQuery.value, ignoreCase = true)
+        }
+    }
+}
