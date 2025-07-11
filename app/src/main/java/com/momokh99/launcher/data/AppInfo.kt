@@ -3,7 +3,8 @@ package com.momokh99.launcher.data
 import android.graphics.drawable.Drawable
 
 data class AppInfo(
-    val name: String,
+    val appName: String,
     val packageName: String,
-    val icon: Drawable?
+    val icon: Drawable? = null,
+    val isSystemApp: Boolean = false
 )
