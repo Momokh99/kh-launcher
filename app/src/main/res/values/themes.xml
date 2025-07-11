@@ -1,0 +1,6 @@
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Launcher" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@android:color/system_accent1_600</item>
+    </style>
+</resources>
